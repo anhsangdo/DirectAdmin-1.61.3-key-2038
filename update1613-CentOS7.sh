@@ -45,13 +45,13 @@ if [ ! -e /usr/bin/perl ] || [ ! -e ${WGET_PATH} ]; then
 
 	if [ ! -e /usr/bin/perl ]; then
 		echo "Cannot find perl. Please run pre-install commands:";
-		echo "    https://help.194.59.159.76/item.php?id=354";
+		echo "    https://help.directadmin.com/item.php?id=354";
 		exit 1;
 	fi
 
 	if [ ! -e ${WGET_PATH} ]; then
 		echo "Cannot find ${WGET_PATH}. Please run pre-install commands:";
-		echo "    https://help.194.59.159.76/item.php?id=354";
+		echo "    https://help.directadmin.com/item.php?id=354";
 		exit 80;
 	fi
 fi
@@ -85,7 +85,7 @@ if [ "$1" = "beta" ] || [ "$2" = "beta" ]; then
 	DOWNLOAD_BETA=true
 fi
 
-FTP_HOST=194.59.159.76
+FTP_HOST=files.directadmin.com
 
 WGET_OPTION="--no-dns-cache";
 COUNT=`$WGET_PATH --help | grep -c no-check-certificate`
@@ -142,7 +142,7 @@ case "$1" in
 		echo "";
 		echo "";
 		echo "Common pre-install commands:";
-		echo " http://help.194.59.159.76/item.php?id=354";
+		echo " http://help.directadmin.com/item.php?id=354";
 		exit 0;
 		;;
 esac
@@ -156,7 +156,7 @@ esac
 		rm -f /root/.lan
 		rm -f ${LID_INFO}
 
-		${WGET_PATH} ${WGET_OPTION} -O ${LID_INFO} https://www.194.59.159.76/clients/my_license_info.php
+		${WGET_PATH} ${WGET_OPTION} -O ${LID_INFO} https://www.directadmin.com/clients/my_license_info.php
 		if [ ! -s ${LID_INFO} ]; then
 			echo "Error getting license info. Empty ${LID_INFO} file. Check for errors, else try the UID/LID method, eg: $0"
 			exit 70
@@ -164,7 +164,7 @@ esac
 		if grep -m1 -q error=1 ${LID_INFO}; then
 			if [ "${OS}" = "FreeBSD" ]; then
 				for ip_address in `ifconfig | grep 'inet[0-9]* ' | awk '{print $2}' | grep -v '^127\.0\.0\.1' | grep -v '^::1' | grep -v '^fe80'`; do {
-					${WGET_PATH} ${WGET_OPTION} --bind-address="${ip_address}" -O ${LID_INFO} https://www.194.59.159.76/clients/my_license_info.php
+					${WGET_PATH} ${WGET_OPTION} --bind-address="${ip_address}" -O ${LID_INFO} https://www.directadmin.com/clients/my_license_info.php
 					if ! grep -m1 -q error=1 ${LID_INFO} && [ -s ${LID_INFO} ]; then
 						BIND_ADDRESS=--bind-address=${ip_address}
 						BIND_ADDRESS_IP=${ip_address}
@@ -174,7 +174,7 @@ esac
 				done
 			else
 				for ip_address in `ip -o addr | awk '!/^[0-9]*: ?lo|link\/ether/ {print $4}' | cut -d/ -f1 | grep -v ^fe80`; do {
-					${WGET_PATH} ${WGET_OPTION} --bind-address="${ip_address}" -O ${LID_INFO} https://www.194.59.159.76/clients/my_license_info.php
+					${WGET_PATH} ${WGET_OPTION} --bind-address="${ip_address}" -O ${LID_INFO} https://www.directadmin.com/clients/my_license_info.php
 					if ! grep -m1 -q error=1 ${LID_INFO} && [ -s ${LID_INFO} ]; then
 						BIND_ADDRESS=--bind-address=${ip_address}
 						BIND_ADDRESS_IP=${ip_address}
@@ -255,7 +255,7 @@ esac
 				LID=0
 			fi
 			if [ "${IP}" = "" ]; then
-				IP=`wget -q -O - http://myip.194.59.159.76`
+				IP=`wget -q -O - http://myip.directadmin.com`
 			fi
 		fi
 	else
@@ -589,7 +589,7 @@ else
 	echo "*****************************************************";
 	echo "*";
 	echo "* DirectAdmin requires certain packages, described here:";
-	echo "*   http://help.194.59.159.76/item.php?id=354";
+	echo "*   http://help.directadmin.com/item.php?id=354";
 	echo "*";
 	echo -n "* Would you like to install these required pre-install packages? (y/n): ";
 
@@ -651,7 +651,7 @@ fi
 		echo "* skipping pre-install packages.";
 		echo "* We then assume that you've already installed them.";
 		echo "* If you have not, then ctrl-c and install them (or-rerun the setup.sh):";
-		echo "*   http://help.194.59.159.76/item.php?id=354";
+		echo "*   http://help.directadmin.com/item.php?id=354";
 
 	fi
 	echo "*";
@@ -900,7 +900,7 @@ fi
 if [ $CMD_LINE -eq 0 ]; then
 
 	echo -n "Your external IP: ";
-	wget -q -O - http://myip.194.59.159.76
+	wget -q -O - http://myip.directadmin.com
 	echo "";
 	echo "The external IP should typically match your license IP.";
 	echo "";
@@ -971,7 +971,7 @@ if [ $CMD_LINE -eq 0 ]; then
 	    echo "3: Apache 2.4, mod_ruid2, php 5.6 (php 5.6 is end-of-life), MariaDB 5.5";
 		echo "4: Apache 2.4, php-fpm, php ${PHP_V_DEF}.";
 		echo "";
-		echo "      Post any issues with custombuild to the forum: http://forum.194.59.159.76/forumdisplay.php?f=61";
+		echo "      Post any issues with custombuild to the forum: http://forum.directadmin.com/forumdisplay.php?f=61";
 	        echo "";
 
 		echo -n "Enter your choice (1, 2, 3 or 4): ";
@@ -1280,7 +1280,7 @@ FILES=$SCRIPTS_PATH/files.sh
 		echo "OS=$OS OS_VER=$OS_VER B64=$B64"
 		echo ""
 		echo "Please report this to DirectAdmin support, along with the full ouput of:"
-		echo "https://help.194.59.159.76/item.php?id=318"
+		echo "https://help.directadmin.com/item.php?id=318"
 		echo ""
 		echo "********************************************************************"
 		echo ""
@@ -1461,7 +1461,7 @@ if [ "$OS" != "FreeBSD" ] && [ "$OS" != "debian" ]; then
 		systemctl enable named.service
 	else
 		mv -f /etc/init.d/named /etc/init.d/named.back
-		wget -O /etc/init.d/named http://www.194.59.159.76/named
+		wget -O /etc/init.d/named http://www.directadmin.com/named
 		chmod 755 /etc/init.d/named
 		/sbin/chkconfig named reset
 	fi
@@ -1488,7 +1488,7 @@ if [ "$OS" != "FreeBSD" ] && [ "$OS" != "debian" ]; then
 	if [ ! -s $RNDCKEY ]; then
 		echo "rndc-confgen failed. Using template instead.";
 
-		wget -O $RNDCKEY http://www.194.59.159.76/rndc.key
+		wget -O $RNDCKEY http://www.directadmin.com/rndc.key
 
                 if [ `cat $RNDCKEY | grep -c secret` -eq 0 ]; then
                         SECRET=`/usr/sbin/rndc-confgen | grep secret | head -n 1`
@@ -1508,7 +1508,7 @@ if [ "$OS" = "FreeBSD" ]; then
 	fi
 	COUNT=`cat /etc/namedb/named.conf | grep -c listen`
 	if [ $COUNT -ne 0 ]; then
-		wget -O /etc/namedb/named.conf http://www.194.59.159.76/named.conf.freebsd
+		wget -O /etc/namedb/named.conf http://www.directadmin.com/named.conf.freebsd
 	fi
 fi
 
@@ -1546,7 +1546,7 @@ if [ "$OS" = "debian" ]; then
 			if [ -e /etc/init.d/bind9 ]; then
 				ln -s bind9 /etc/init.d/named
 			else
-				wget -O /etc/init.d/named http://www.194.59.159.76/named.debian
+				wget -O /etc/init.d/named http://www.directadmin.com/named.debian
 				chmod 755 /etc/init.d/named
 				#ln -s bind /etc/init.d/named
 			fi
@@ -1581,7 +1581,7 @@ if [ $SSL_DEVEL -eq 0 ]; then
 	echo "";
 	echo "Cannot find ${SSL_H}.";
 	echo "Did you run the pre-install commands?";
-	echo "http://help.194.59.159.76/item.php?id=354";
+	echo "http://help.directadmin.com/item.php?id=354";
 	echo "";
 	exit 12;
 fi
@@ -1671,10 +1671,10 @@ if [ "$OS" = "debian" ] && [ -e /etc/apparmor.d ]; then
 fi
 
 if [ -s /usr/sbin/ntpdate ]; then
-	/usr/sbin/ntpdate -b -u ntp.194.59.159.76
+	/usr/sbin/ntpdate -b -u ntp.directadmin.com
 else
 	if [ -s /usr/bin/rdate ]; then
-		/usr/bin/rdate -s rdate.194.59.159.76
+		/usr/bin/rdate -s rdate.directadmin.com
 	fi
 fi
 
@@ -1686,7 +1686,7 @@ if [ -x $DATE_BIN ]; then
 			echo "Your system date is not correct ($NOW). Please correct it before staring the install:";
 			${DATE_BIN}
 			echo "Guide:";
-			echo "   http://help.194.59.159.76/item.php?id=52";
+			echo "   http://help.directadmin.com/item.php?id=52";
 			exit 1;
 		fi
 	else
@@ -1697,7 +1697,7 @@ fi
 #test and make sure wget works on debian.
 if [ "$OS" = "debian" ]; then
 
-	$BIN_DIR/wget -O /dev/null https://www.194.59.159.76
+	$BIN_DIR/wget -O /dev/null https://www.directadmin.com
 	RET=$?
 	if [ $RET -eq 1 ]; then
 
@@ -1729,7 +1729,7 @@ if [ "$OS" = "debian" ]; then
 
 		echo "";
 		echo "if wget is still not working correctly, compile it from source for your system:";
-		echo "http://help.194.59.159.76/item.php?id=119";
+		echo "http://help.directadmin.com/item.php?id=119";
 		echo "";
 	fi
 fi
@@ -1814,7 +1814,7 @@ fi
 
 if [ ! -z "${BIND_ADDRESS}" ] && [ ! -z "${BIND_ADDRESS_IP}" ]; then
 	if [ -x /usr/bin/ping ] || [ -x /bin/ping ]; then
-		if ! ping -c 1 -W 1 update.194.59.159.76 -I ${BIND_ADDRESS_IP} >/dev/null 2>&1; then
+		if ! ping -c 1 -W 1 update.directadmin.com -I ${BIND_ADDRESS_IP} >/dev/null 2>&1; then
 			BIND_ADDRESS=""
 			LAN_AUTO=1
 			echo 1 > /root/.lan
@@ -1858,7 +1858,7 @@ fi
 COUNT=`head -n 4 $DA_PATH/update.tar.gz | grep -c "* You are not allowed to run this program *"`;
 if [ $COUNT -ne 0 ]; then
 	echo "";
-	echo "You are not authorized to download the update package with that client id and license id for this IP address. Please email sales@194.59.159.76";
+	echo "You are not authorized to download the update package with that client id and license id for this IP address. Please email sales@directadmin.com";
 	exit 4;
 fi
 
@@ -1870,7 +1870,7 @@ if [ ! -e $DA_PATH/directadmin ]; then
 
         echo "";
 	echo "Please go to this URL to find out why:";
-	echo "http://help.194.59.159.76/item.php?id=639";
+	echo "http://help.directadmin.com/item.php?id=639";
         echo "";
 
 	exit 5;
@@ -1967,7 +1967,7 @@ if [ -s /usr/local/directadmin/conf/directadmin.conf ]; then
 	echo ""
 	echo "Install Complete!";
 	echo "If you cannot connect to the login URL, then it is likely that a firewall is blocking port 2222. Please see:"
-	echo "  https://help.194.59.159.76/item.php?id=75"
+	echo "  https://help.directadmin.com/item.php?id=75"
 fi
 
 printf \\a
